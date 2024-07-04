@@ -1,36 +1,15 @@
-# Compiler
 CXX = g++
-
-# Compiler flags
 CXXFLAGS = -std=c++11 -Wall
+TARGET = main.exe
+OBJS = main.o
 
-# Target executable
-TARGET = main
-
-# Source files
-SRCS = main.cpp
-
-# Header files
-HDRS = AnyReader.h AnyWriter.h KeyboardReader.h FileReader.h TerminalWriter.h FileWriter.h
-
-# Object files
-OBJS = $(SRCS:.cpp=.o)
-
-# Default target
 all: $(TARGET)
 
-# Linking
 $(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $@ $^
 
-# Compilation
-%.o: %.cpp $(HDRS)
-	$(CXX) $(CXXFLAGS) -c $<
+main.o: main.cpp AnyReader.h AnyWriter.h KeyboardReader.h TerminalWriter.h FileReader.h FileWriter.h
+	$(CXX) $(CXXFLAGS) -c main.cpp
 
-# Clean up
 clean:
-	rm -f $(TARGET) $(OBJS)
-
-# Phony targets
-.PHONY: all clean
-
+	del $(OBJS) $(TARGET)
